@@ -1,182 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Event Vertical Rotator</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 20px;
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+  <meta charset="UTF-8" />
+  <title>Industry Conclave 2025</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-        #verticals-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-        }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5faff;
+      color: #333;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
 
-        .vertical-item {
-            width: 140px;
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-            padding: 10px;
-            border-radius: 12px;
-        }
+    /* LEFT PANEL */
+    .left-panel {
+      width: 380px;
+      background-color: #e7f0fa;
+      padding: 15px 10px;
+      border-right: 1px solid #ccc;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
 
-        .vertical-item img {
-            width: 100px;
-            height: 100px;
-            object-fit: contain;
-            border-radius: 8px;
-            border: 2px solid transparent;
-        }
+    .verticals-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding-top: 5px;
+    }
 
-        .active-vertical {
-            box-shadow: 0 0 15px 4px #007bff;
-            transform: scale(1.05);
-        }
+    .vertical-item {
+      text-align: center;
+      padding: 8px;
+      background-color: #fff;
+      border-radius: 10px;
+      transition: 0.2s ease;
+      cursor: pointer;
+    }
 
-        #people-list {
-            width: 80%;
-        }
+    .vertical-item:hover {
+      background-color: #dceeff;
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+    .vertical-item img {
+      width: 70px;
+      height: 70px;
+      object-fit: contain;
+      margin-bottom: 5px;
+    }
 
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
+    .vertical-item div {
+      font-size: 13px;
+      font-weight: 600;
+    }
 
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
+    .active-vertical {
+      background-color: #cce8ff;
+      box-shadow: 0 0 8px 2px #007bff55;
+    }
+
+    /* RIGHT PANEL */
+    .right-panel {
+      flex: 1;
+      padding: 20px 30px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .conclave-header {
+      text-align: center;
+      margin-bottom: 20px;
+      background: linear-gradient(to right, #003366, #0055aa);
+      color: #fff;
+      padding: 15px;
+      border-radius: 8px;
+    }
+
+    .conclave-header h1 {
+      margin: 0;
+      font-size: 26px;
+    }
+
+    .conclave-header p {
+      font-size: 15px;
+      margin: 5px 0 0;
+      color: #e6ecf5;
+    }
+
+    .right-panel h2 {
+      margin: 0 0 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background-color: #fff;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f0f0f0;
+    }
+
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-    <h2>Technical Verticals</h2>
-    <div id="verticals-container"></div>
 
-    <div id="people-list">
-        <h2>Attendees</h2>
-        <table id="attendees-table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>LinkedIn</th>
-                </tr>
-            </thead>
-            <tbody id="table-body"></tbody>
-        </table>
+  <!-- Left Panel -->
+  <div class="left-panel">
+    <div class="verticals-grid" id="verticals-container"></div>
+  </div>
+
+  <!-- Right Panel -->
+  <div class="right-panel">
+    <div class="conclave-header">
+      <h1>Industry Conclave 2025</h1>
+      <p>Amrita Vishwa Vidyapeetham, Bengaluru Campus – 26<sup>th</sup> April 2025</p>
     </div>
 
-    <script>
-        const verticalsData = {
-            "Cloud Computing": [
-        { name: "Dr. Rajesh Madathil", linkedin: "https://in.linkedin.com/in/rajesh-madathil-68986a24" },
-        { name: "Dr. Supriya M", linkedin: "https://in.linkedin.com/in/supriya-m-a000252b" },
-        { name: "Dr. Suja Palaniswamy", linkedin: "https://in.linkedin.com/in/suja-palaniswamy-b8993b176" }
+    <h2>Faculty Attendees</h2>
+    <table id="attendees-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>LinkedIn</th>
+        </tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+  </div>
+
+  <script>
+    const verticalsData = {
+      "Cloud Computing": [
+        { name: "Dr. Rajesh Madathil", linkedin: "https://in.linkedin.com/in/rajesh-madathil-68986a24" }
       ],
       "Artificial Intelligence": [
-        { name: "Dr. Debanjali Bhattacharya", linkedin: "https://in.linkedin.com/in/debanjalic" },
-        { name: "Dr. Ashoka S", linkedin: "https://in.linkedin.com/in/ashokasiddaraju" },
-        { name: "Dr. Niranjan DK", linkedin: "https://in.linkedin.com/in/niranjan-dk-42104a119" }
+        { name: "Dr. Debanjali Bhattacharya", linkedin: "https://in.linkedin.com/in/debanjalic" }
       ],
       "Cybersecurity": [
-        { name: "Dr. Mini Sujith", linkedin: "https://in.linkedin.com/in/mini-sujith-4486001a9" },
-        { name: "Dr. Siva Kumar Belliraj", linkedin: "https://in.linkedin.com/in/siva-kumar-belliraj-99562639" },
-        { name: "Dr. Parimi Mastan Rao", linkedin: "https://in.linkedin.com/in/mastan-rao-parimi" }
-      ],
-      "Data Science": [
-        { name: "Dr. Navin Kumar", linkedin: "https://in.linkedin.com/in/navinkumar21india" },
-        { name: "Dr. Supriya M", linkedin: "https://in.linkedin.com/in/supriya-m-a000252b" },
-        { name: "Dr. Suja Palaniswamy", linkedin: "https://in.linkedin.com/in/suja-palaniswamy-b8993b176" }
-      ],
-      "Internet of Things": [
-        { name: "Dr. Rajesh Madathil", linkedin: "https://in.linkedin.com/in/rajesh-madathil-68986a24" },
-        { name: "Dr. Ashoka S", linkedin: "https://in.linkedin.com/in/ashokasiddaraju" },
-        { name: "Dr. Niranjan DK", linkedin: "https://in.linkedin.com/in/niranjan-dk-42104a119" }
-      ],
-      "Robotics": [
-        { name: "Dr. Rajeevlochana G. Chittawadigi", linkedin: "https://in.linkedin.com/in/rajeevlochana-g-chittawadigi" },
-        { name: "Dr. Siva Kumar Belliraj", linkedin: "https://in.linkedin.com/in/siva-kumar-belliraj-99562639" },
         { name: "Dr. Mini Sujith", linkedin: "https://in.linkedin.com/in/mini-sujith-4486001a9" }
       ],
+      "Data Science": [
+        { name: "Dr. Navin Kumar", linkedin: "https://in.linkedin.com/in/navinkumar21india" }
+      ],
+      "Internet of Things": [
+        { name: "Dr. Ashoka S", linkedin: "https://in.linkedin.com/in/ashokasiddaraju" }
+      ],
+      "Robotics": [
+        { name: "Dr. Rajeevlochana Chittawadigi", linkedin: "https://in.linkedin.com/in/rajeevlochana-g-chittawadigi" }
+      ],
       "Blockchain": [
-        { name: "Dr. Parimi Mastan Rao", linkedin: "https://in.linkedin.com/in/mastan-rao-parimi" },
-        { name: "Dr. Navin Kumar", linkedin: "https://in.linkedin.com/in/navinkumar21india" },
-        { name: "Dr. Debanjali Bhattacharya", linkedin: "https://in.linkedin.com/in/debanjalic" }
+        { name: "Dr. Parimi Mastan Rao", linkedin: "https://in.linkedin.com/in/mastan-rao-parimi" }
+      ],
+      "Digital Twin": [
+        { name: "Dr. Supriya M", linkedin: "https://in.linkedin.com/in/supriya-m-a000252b" }
+      ],
+      "Edge Computing": [
+        { name: "Dr. Suja Palaniswamy", linkedin: "https://in.linkedin.com/in/suja-palaniswamy-b8993b176" }
+      ],
+      "Autonomous Systems": [
+        { name: "Dr. Siva Kumar Belliraj", linkedin: "https://in.linkedin.com/in/siva-kumar-belliraj-99562639" }
+      ],
+      "AR/VR": [
+        { name: "Dr. Niranjan DK", linkedin: "https://in.linkedin.com/in/niranjan-dk-42104a119" }
+      ],
+      "Machine Vision": [
+        { name: "Dr. Anjali Sharma", linkedin: "#" }
       ]
-        };
+    };
 
-        let currentVerticalIndex = 0;
-        const verticals = Object.keys(verticalsData);
-        let rotationInterval;
+    let currentVerticalIndex = 0;
+    const verticals = Object.keys(verticalsData);
+    let rotationInterval;
 
-        function initializeVerticals() {
-            const container = document.getElementById('verticals-container');
-            container.innerHTML = '';
-            verticals.forEach((vertical, index) => {
-                const div = document.createElement('div');
-                div.className = `vertical-item ${index === 0 ? 'active-vertical' : ''}`;
-                div.innerHTML = `
-                    <img src="table.jpg" alt="Table for ${vertical}">
-                    <div>${vertical}</div>
-                `;
-                div.addEventListener('click', () => {
-                    setVertical(index);
-                    resetAutoRotation();
-                });
-                container.appendChild(div);
-            });
-        }
+    function initializeVerticals() {
+      const container = document.getElementById('verticals-container');
+      container.innerHTML = '';
+      verticals.forEach((vertical, index) => {
+        const div = document.createElement('div');
+        div.className = `vertical-item ${index === 0 ? 'active-vertical' : ''}`;
+        div.innerHTML = `
+          <img src="table.jpg" alt="${vertical}">
+          <div>${vertical}</div>
+        `;
+        div.addEventListener('click', () => {
+          setVertical(index);
+          resetAutoRotation();
+        });
+        container.appendChild(div);
+      });
+    }
 
-        function updateAttendees(vertical) {
-            const tbody = document.getElementById('table-body');
-            tbody.innerHTML = '';
-            verticalsData[vertical].forEach(person => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${person.name}</td>
-                    <td><a href="${person.linkedin}" target="_blank">View Profile</a></td>
-                `;
-                tbody.appendChild(row);
-            });
-        }
+    function updateAttendees(vertical) {
+      const tbody = document.getElementById('table-body');
+      tbody.innerHTML = '';
+      verticalsData[vertical].forEach(person => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${person.name}</td>
+          <td><a href="${person.linkedin}" target="_blank">View Profile</a></td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
 
-        function setVertical(index) {
-            const items = document.querySelectorAll('.vertical-item');
-            items[currentVerticalIndex].classList.remove('active-vertical');
-            currentVerticalIndex = index;
-            items[currentVerticalIndex].classList.add('active-vertical');
-            updateAttendees(verticals[currentVerticalIndex]);
-        }
+    function setVertical(index) {
+      const items = document.querySelectorAll('.vertical-item');
+      items[currentVerticalIndex].classList.remove('active-vertical');
+      currentVerticalIndex = index;
+      items[currentVerticalIndex].classList.add('active-vertical');
+      updateAttendees(verticals[currentVerticalIndex]);
+    }
 
-        function rotateVertical() {
-            const nextIndex = (currentVerticalIndex + 1) % verticals.length;
-            setVertical(nextIndex);
-        }
+    function rotateVertical() {
+      const nextIndex = (currentVerticalIndex + 1) % verticals.length;
+      setVertical(nextIndex);
+    }
 
-        function resetAutoRotation() {
-            clearInterval(rotationInterval);
-            rotationInterval = setInterval(rotateVertical, 10000);
-        }
+    function resetAutoRotation() {
+      clearInterval(rotationInterval);
+      rotationInterval = setInterval(rotateVertical, 10000);
+    }
 
-        // Initial setup
-        initializeVerticals();
-        updateAttendees(verticals[0]);
-        rotationInterval = setInterval(rotateVertical, 10000);
-    </script>
+    // Init
+    initializeVerticals();
+    updateAttendees(verticals[0]);
+    rotationInterval = setInterval(rotateVertical, 10000);
+  </script>
+
 </body>
 </html>
